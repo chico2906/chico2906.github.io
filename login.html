@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login administrador — WG Houses</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="container">
+    <a href="index.html" class="nav-logo">
+      <img src="images/logo/wg.png" alt="WG Houses" width="42" height="42" style="border-radius:50%;display:block;">
+      <span>WG Houses<span class="sub">Imóveis de Temporada</span></span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html#historia">Nossa História</a>
+      <a href="index.html#vantagens">Vantagens</a>
+      <a href="index.html#imoveis">Imóveis</a>
+      <a href="index.html#contato">Contato</a>
+      <a href="login.html">Login</a>
+    </nav>
+    <a class="btn btn-outline" href="index.html#contato">Anuncie seu imóvel</a>
+    <a class="btn btn-login" href="login.html">Login</a>
+    <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="login-shell">
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="images/logo/wg.png" alt="WG Houses" width="64" height="64" style="border-radius:50%;">
+    </div>
+    <h1>Login administrador</h1>
+    <p class="login-sub">Acesso restrito à equipe WG Houses</p>
+
+    <div class="login-error" id="loginError">Este login ainda não está conectado a um sistema real — é apenas a tela visual por enquanto.</div>
+
+    <form id="loginForm">
+      <div class="login-field">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="seu.email@wghouses.com.br" required>
+      </div>
+      <div class="login-field">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="btn btn-coral btn-block">Entrar</button>
+    </form>
+
+    <a class="login-back" href="index.html">← Voltar para o site</a>
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+<script>
+  document.getElementById('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    document.getElementById('loginError').classList.add('show');
+  });
+</script>
+</body>
+</html>
