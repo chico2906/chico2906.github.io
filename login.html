@@ -40,7 +40,7 @@
     <h1>Login administrador</h1>
     <p class="login-sub">Acesso restrito à equipe WG Houses</p>
 
-    <div class="login-error" id="loginError">Este login ainda não está conectado a um sistema real — é apenas a tela visual por enquanto.</div>
+    <div class="login-error" id="loginError"></div>
 
     <form id="loginForm">
       <div class="login-field">
@@ -51,18 +51,45 @@
         <label for="senha">Senha</label>
         <input type="password" id="senha" name="senha" placeholder="••••••••" required>
       </div>
-      <button type="submit" class="btn btn-coral btn-block">Entrar</button>
+      <button type="submit" class="btn btn-coral btn-block" id="loginBtn">Entrar</button>
     </form>
 
     <a class="login-back" href="index.html">← Voltar para o site</a>
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-client.js"></script>
 <script src="js/script.js"></script>
 <script>
-  document.getElementById('loginForm').addEventListener('submit', function (e) {
+  // Se já estiver logado, pula direto para o painel
+  sb.auth.getSession().then(function (res) {
+    if (res.data.session) window.location.href = 'admin.html';
+  });
+
+  var form = document.getElementById('loginForm');
+  var errorBox = document.getElementById('loginError');
+  var loginBtn = document.getElementById('loginBtn');
+
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
-    document.getElementById('loginError').classList.add('show');
+    errorBox.classList.remove('show');
+    loginBtn.disabled = true;
+    loginBtn.textContent = 'Entrando...';
+
+    var email = document.getElementById('email').value.trim();
+    var senha = document.getElementById('senha').value;
+
+    sb.auth.signInWithPassword({ email: email, password: senha }).then(function (res) {
+      if (res.error) {
+        errorBox.textContent = 'E-mail ou senha incorretos.';
+        errorBox.classList.add('show');
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Entrar';
+        return;
+      }
+      window.location.href = 'admin.html';
+    });
   });
 </script>
 </body>

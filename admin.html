@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel administrador — WG Houses</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="container">
+    <a href="index.html" class="nav-logo">
+      <img src="images/logo/wg.png" alt="WG Houses" width="42" height="42" style="border-radius:50%;display:block;">
+      <span>WG Houses<span class="sub">Painel Administrador</span></span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Ver site</a>
+      <a href="#" id="logoutLink">Sair</a>
+    </nav>
+    <span class="user-email" id="userEmail" style="color:rgba(250,247,239,.75); font-family:var(--font-mono); font-size:12.5px; margin-right:14px;"></span>
+    <a class="btn btn-login" href="#" id="logoutBtn">Sair</a>
+    <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<section class="admin-shell">
+  <div class="container">
+    <div class="admin-head">
+      <h1>Imóveis cadastrados</h1>
+    </div>
+
+    <div class="admin-msg" id="listMsg"></div>
+
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Localização</th>
+            <th>Quartos</th>
+            <th>Hóspedes</th>
+            <th>Preço</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <tr><td colspan="7">Carregando...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admin-form-card">
+      <h2 id="formTitle">Novo imóvel</h2>
+      <div class="admin-msg" id="formMsg"></div>
+
+      <form id="imovelForm">
+        <input type="hidden" id="f_id">
+
+        <div class="admin-grid">
+          <div class="admin-field">
+            <label for="f_slug">Slug (identificador único)</label>
+            <input type="text" id="f_slug" placeholder="imovel-6" required>
+            <span class="hint">Usado internamente, sem espaços.</span>
+          </div>
+          <div class="admin-field span-2">
+            <label for="f_nome">Nome do imóvel</label>
+            <input type="text" id="f_nome" placeholder="Casa Vista Mar" required>
+          </div>
+          <div class="admin-field">
+            <label for="f_ativo">Status</label>
+            <div class="admin-checkbox" style="padding-top:10px;">
+              <input type="checkbox" id="f_ativo" checked>
+              <span>Publicado (visível no site)</span>
+            </div>
+          </div>
+
+          <div class="admin-field span-2">
+            <label for="f_localizacao">Localização (texto exibido)</label>
+            <input type="text" id="f_localizacao" placeholder="Praia da Enseada, São Francisco do Sul, SC">
+          </div>
+          <div class="admin-field span-2">
+            <label for="f_endereco">Endereço (opcional, não é exibido publicamente)</label>
+            <input type="text" id="f_endereco" placeholder="Rua Exemplo, 123">
+          </div>
+
+          <div class="admin-field">
+            <label for="f_lat">Latitude</label>
+            <input type="text" id="f_lat" placeholder="-26.2377">
+          </div>
+          <div class="admin-field">
+            <label for="f_lon">Longitude</label>
+            <input type="text" id="f_lon" placeholder="-48.5147">
+          </div>
+          <div class="admin-field">
+            <label for="f_quartos">Quartos</label>
+            <input type="text" id="f_quartos" placeholder="3">
+          </div>
+          <div class="admin-field">
+            <label for="f_banheiros">Banheiros</label>
+            <input type="text" id="f_banheiros" placeholder="2,5">
+          </div>
+
+          <div class="admin-field">
+            <label for="f_hospedes">Hóspedes</label>
+            <input type="number" id="f_hospedes" placeholder="8">
+          </div>
+          <div class="admin-field">
+            <label for="f_camas">Camas</label>
+            <input type="number" id="f_camas" placeholder="6">
+          </div>
+          <div class="admin-field">
+            <label for="f_preco">Preço a partir (R$/noite)</label>
+            <input type="text" id="f_preco" placeholder="890">
+          </div>
+          <div class="admin-field">
+            <label for="f_preco_obs">Observação de preço</label>
+            <input type="text" id="f_preco_obs" placeholder="Ex: Consulte no Airbnb">
+          </div>
+
+          <div class="admin-field span-4">
+            <label for="f_descricao">Descrição</label>
+            <textarea id="f_descricao" rows="4" placeholder="Descrição completa do imóvel..."></textarea>
+          </div>
+
+          <div class="admin-field span-2">
+            <label for="f_comodidades">Comodidades (uma por linha)</label>
+            <textarea id="f_comodidades" rows="5" placeholder="Wi-Fi&#10;Ar-condicionado&#10;Piscina"></textarea>
+          </div>
+          <div class="admin-field span-2">
+            <label for="f_fotos">Fotos — URLs (uma por linha)</label>
+            <textarea id="f_fotos" rows="5" placeholder="images/imovel-6/foto1.jpg&#10;https://..."></textarea>
+          </div>
+
+          <div class="admin-field span-2">
+            <label for="f_video">URL do vídeo</label>
+            <input type="text" id="f_video" placeholder="videos/imovel-6/tour.mp4">
+          </div>
+          <div class="admin-field span-2">
+            <label for="f_airbnb">Link do Airbnb</label>
+            <input type="text" id="f_airbnb" placeholder="https://www.airbnb.com.br/rooms/...">
+          </div>
+        </div>
+
+        <div class="admin-form-actions">
+          <button type="submit" class="btn btn-coral" id="saveBtn">Salvar imóvel</button>
+          <button type="button" class="btn btn-outline" style="color:var(--tide); border-color:rgba(14,59,67,.3);" id="cancelBtn">Cancelar edição</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/script.js"></script>
+<script>
+(function () {
+  var tableBody = document.getElementById('tableBody');
+  var form = document.getElementById('imovelForm');
+  var formTitle = document.getElementById('formTitle');
+  var formMsg = document.getElementById('formMsg');
+  var listMsg = document.getElementById('listMsg');
+  var cancelBtn = document.getElementById('cancelBtn');
+
+  function showMsg(el, text, type) {
+    el.textContent = text;
+    el.className = 'admin-msg show ' + type;
+  }
+  function hideMsg(el) { el.className = 'admin-msg'; }
+
+  // ---- Proteção de acesso: exige login ----
+  sb.auth.getSession().then(function (res) {
+    if (!res.data.session) {
+      window.location.href = 'login.html';
+      return;
+    }
+    document.getElementById('userEmail').textContent = res.data.session.user.email;
+    carregarImoveis();
+  });
+
+  function logout() {
+    sb.auth.signOut().then(function () { window.location.href = 'login.html'; });
+  }
+  document.getElementById('logoutBtn').addEventListener('click', function (e) { e.preventDefault(); logout(); });
+  document.getElementById('logoutLink').addEventListener('click', function (e) { e.preventDefault(); logout(); });
+
+  // ---- Carregar lista ----
+  function carregarImoveis() {
+    sb.from('imoveis').select('*').order('slug').then(function (res) {
+      if (res.error) {
+        showMsg(listMsg, 'Erro ao carregar imóveis: ' + res.error.message, 'err');
+        return;
+      }
+      renderTable(res.data);
+    });
+  }
+
+  function renderTable(imoveis) {
+    if (!imoveis.length) {
+      tableBody.innerHTML = '<tr><td colspan="7">Nenhum imóvel cadastrado ainda.</td></tr>';
+      return;
+    }
+    tableBody.innerHTML = imoveis.map(function (im) {
+      var preco = im.preco_a_partir ? ('R$ ' + im.preco_a_partir) : (im.preco_observacao || '—');
+      var statusClass = im.ativo ? 'ativo' : 'inativo';
+      var statusText = im.ativo ? 'Publicado' : 'Oculto';
+      return '<tr>' +
+        '<td><strong>' + escapeHtml(im.nome) + '</strong><br><span style="color:var(--driftwood);font-size:12px;">' + escapeHtml(im.slug) + '</span></td>' +
+        '<td>' + escapeHtml(im.localizacao || '—') + '</td>' +
+        '<td>' + (im.quartos != null ? im.quartos : '—') + '</td>' +
+        '<td>' + (im.hospedes != null ? im.hospedes : '—') + '</td>' +
+        '<td>' + escapeHtml(preco) + '</td>' +
+        '<td><span class="status-pill ' + statusClass + '">' + statusText + '</span></td>' +
+        '<td><div class="row-actions">' +
+          '<button type="button" class="action-edit" data-id="' + im.id + '">Editar</button>' +
+          '<button type="button" class="action-delete" data-id="' + im.id + '">Apagar</button>' +
+        '</div></td>' +
+      '</tr>';
+    }).join('');
+
+    tableBody.querySelectorAll('.action-edit').forEach(function (btn) {
+      btn.addEventListener('click', function () { editarImovel(btn.getAttribute('data-id'), imoveis); });
+    });
+    tableBody.querySelectorAll('.action-delete').forEach(function (btn) {
+      btn.addEventListener('click', function () { apagarImovel(btn.getAttribute('data-id')); });
+    });
+  }
+
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  // ---- Editar (preenche o formulário) ----
+  function editarImovel(id, imoveis) {
+    var im = imoveis.find(function (i) { return String(i.id) === String(id); });
+    if (!im) return;
+    document.getElementById('f_id').value = im.id;
+    document.getElementById('f_slug').value = im.slug || '';
+    document.getElementById('f_nome').value = im.nome || '';
+    document.getElementById('f_ativo').checked = !!im.ativo;
+    document.getElementById('f_localizacao').value = im.localizacao || '';
+    document.getElementById('f_endereco').value = im.endereco || '';
+    document.getElementById('f_lat').value = im.latitude != null ? im.latitude : '';
+    document.getElementById('f_lon').value = im.longitude != null ? im.longitude : '';
+    document.getElementById('f_quartos').value = im.quartos != null ? im.quartos : '';
+    document.getElementById('f_banheiros').value = im.banheiros != null ? im.banheiros : '';
+    document.getElementById('f_hospedes').value = im.hospedes != null ? im.hospedes : '';
+    document.getElementById('f_camas').value = im.camas != null ? im.camas : '';
+    document.getElementById('f_preco').value = im.preco_a_partir != null ? im.preco_a_partir : '';
+    document.getElementById('f_preco_obs').value = im.preco_observacao || '';
+    document.getElementById('f_descricao').value = im.descricao || '';
+    document.getElementById('f_comodidades').value = Array.isArray(im.comodidades) ? im.comodidades.join('\n') : '';
+    document.getElementById('f_fotos').value = Array.isArray(im.fotos) ? im.fotos.join('\n') : '';
+    document.getElementById('f_video').value = im.video_url || '';
+    document.getElementById('f_airbnb').value = im.link_airbnb || '';
+    formTitle.textContent = 'Editando: ' + im.nome;
+    hideMsg(formMsg);
+    window.scrollTo({ top: form.getBoundingClientRect().top + window.scrollY - 40, behavior: 'smooth' });
+  }
+
+  function limparFormulario() {
+    form.reset();
+    document.getElementById('f_id').value = '';
+    document.getElementById('f_ativo').checked = true;
+    formTitle.textContent = 'Novo imóvel';
+    hideMsg(formMsg);
+  }
+  cancelBtn.addEventListener('click', limparFormulario);
+
+  // ---- Apagar ----
+  function apagarImovel(id) {
+    if (!window.confirm('Tem certeza que quer apagar este imóvel? Essa ação não pode ser desfeita.')) return;
+    sb.from('imoveis').delete().eq('id', id).then(function (res) {
+      if (res.error) {
+        showMsg(listMsg, 'Erro ao apagar: ' + res.error.message, 'err');
+        return;
+      }
+      showMsg(listMsg, 'Imóvel apagado.', 'ok');
+      carregarImoveis();
+    });
+  }
+
+  // ---- Salvar (criar ou atualizar) ----
+  function linhasParaArray(texto) {
+    return texto.split('\n').map(function (s) { return s.trim(); }).filter(function (s) { return s.length > 0; });
+  }
+  function paraNumeroOuNull(valor) {
+    if (valor === '' || valor === null || valor === undefined) return null;
+    var n = parseFloat(String(valor).replace(',', '.'));
+    return isNaN(n) ? null : n;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var id = document.getElementById('f_id').value;
+
+    var payload = {
+      slug: document.getElementById('f_slug').value.trim(),
+      nome: document.getElementById('f_nome').value.trim(),
+      localizacao: document.getElementById('f_localizacao').value.trim() || null,
+      endereco: document.getElementById('f_endereco').value.trim() || null,
+      latitude: paraNumeroOuNull(document.getElementById('f_lat').value),
+      longitude: paraNumeroOuNull(document.getElementById('f_lon').value),
+      quartos: paraNumeroOuNull(document.getElementById('f_quartos').value),
+      banheiros: paraNumeroOuNull(document.getElementById('f_banheiros').value),
+      hospedes: paraNumeroOuNull(document.getElementById('f_hospedes').value),
+      camas: paraNumeroOuNull(document.getElementById('f_camas').value),
+      preco_a_partir: paraNumeroOuNull(document.getElementById('f_preco').value),
+      preco_observacao: document.getElementById('f_preco_obs').value.trim() || null,
+      descricao: document.getElementById('f_descricao').value.trim() || null,
+      comodidades: linhasParaArray(document.getElementById('f_comodidades').value),
+      fotos: linhasParaArray(document.getElementById('f_fotos').value),
+      video_url: document.getElementById('f_video').value.trim() || null,
+      link_airbnb: document.getElementById('f_airbnb').value.trim() || null,
+      ativo: document.getElementById('f_ativo').checked
+    };
+
+    var saveBtn = document.getElementById('saveBtn');
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'Salvando...';
+
+    var query = id
+      ? sb.from('imoveis').update(payload).eq('id', id)
+      : sb.from('imoveis').insert(payload);
+
+    query.then(function (res) {
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'Salvar imóvel';
+      if (res.error) {
+        showMsg(formMsg, 'Erro ao salvar: ' + res.error.message, 'err');
+        return;
+      }
+      showMsg(formMsg, 'Imóvel salvo com sucesso!', 'ok');
+      limparFormulario();
+      carregarImoveis();
+    });
+  });
+})();
+</script>
+</body>
+</html>
