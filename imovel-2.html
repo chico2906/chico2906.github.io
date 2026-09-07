@@ -92,6 +92,12 @@
         <li><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.4"/><path d="M9 5v4l3 2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Check-in flexível</li>
       </ul>
 
+      <div class="avail-block">
+        <h2>Disponibilidade</h2>
+        <p class="note">Datas sincronizadas automaticamente com o calendário do Airbnb.</p>
+        <div data-avail-calendar data-slug="imovel-2" data-airbnb-link="https://www.airbnb.com.br/rooms/00000002"></div>
+      </div>
+
       <div class="video-block">
         <h2>Vídeo do imóvel</h2>
         <p class="note">Vídeo de demonstração — substitua pelo tour em vídeo real do Recanto das Dunas.</p>
@@ -212,6 +218,9 @@
   <span class="lightbox-counter"></span>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/calendar.js"></script>
 <script src="js/script.js"></script>
 </body>
 </html>

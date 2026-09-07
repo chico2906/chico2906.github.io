@@ -33,6 +33,7 @@
   <div class="container">
     <div class="admin-head">
       <h1>Imóveis cadastrados</h1>
+      <button type="button" class="btn btn-tide" id="syncBtn">Sincronizar calendários agora</button>
     </div>
 
     <div class="admin-msg" id="listMsg"></div>
@@ -146,6 +147,11 @@
             <label for="f_airbnb">Link do Airbnb</label>
             <input type="text" id="f_airbnb" placeholder="https://www.airbnb.com.br/rooms/...">
           </div>
+          <div class="admin-field span-2">
+            <label for="f_ical">Link do calendário iCal (sincronização)</label>
+            <input type="text" id="f_ical" placeholder="https://www.airbnb.com.br/calendar/ical/....ics">
+            <span class="hint">No Airbnb: Anúncio → Disponibilidade → Sincronizar calendários → Exportar calendário.</span>
+          </div>
         </div>
 
         <div class="admin-form-actions">
@@ -190,6 +196,29 @@
   }
   document.getElementById('logoutBtn').addEventListener('click', function (e) { e.preventDefault(); logout(); });
   document.getElementById('logoutLink').addEventListener('click', function (e) { e.preventDefault(); logout(); });
+
+  // ---- Sincronizar calendários com o Airbnb agora ----
+  document.getElementById('syncBtn').addEventListener('click', function () {
+    var btn = this;
+    btn.disabled = true;
+    btn.textContent = 'Sincronizando...';
+    fetch(SUPABASE_URL + '/functions/v1/sync-calendarios', { method: 'POST' })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        btn.disabled = false;
+        btn.textContent = 'Sincronizar calendários agora';
+        if (data.ok) {
+          showMsg(listMsg, 'Sincronização concluída: ' + JSON.stringify(data.resumo), 'ok');
+        } else {
+          showMsg(listMsg, 'Erro na sincronização: ' + data.erro, 'err');
+        }
+      })
+      .catch(function (err) {
+        btn.disabled = false;
+        btn.textContent = 'Sincronizar calendários agora';
+        showMsg(listMsg, 'Erro na sincronização: ' + err.message, 'err');
+      });
+  });
 
   // ---- Carregar lista ----
   function carregarImoveis() {
@@ -263,6 +292,7 @@
     document.getElementById('f_fotos').value = Array.isArray(im.fotos) ? im.fotos.join('\n') : '';
     document.getElementById('f_video').value = im.video_url || '';
     document.getElementById('f_airbnb').value = im.link_airbnb || '';
+    document.getElementById('f_ical').value = im.link_ical || '';
     formTitle.textContent = 'Editando: ' + im.nome;
     hideMsg(formMsg);
     window.scrollTo({ top: form.getBoundingClientRect().top + window.scrollY - 40, behavior: 'smooth' });
@@ -322,6 +352,7 @@
       fotos: linhasParaArray(document.getElementById('f_fotos').value),
       video_url: document.getElementById('f_video').value.trim() || null,
       link_airbnb: document.getElementById('f_airbnb').value.trim() || null,
+      link_ical: document.getElementById('f_ical').value.trim() || null,
       ativo: document.getElementById('f_ativo').checked
     };
 
