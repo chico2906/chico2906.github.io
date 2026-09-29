@@ -148,9 +148,14 @@
             <input type="text" id="f_airbnb" placeholder="https://www.airbnb.com.br/rooms/...">
           </div>
           <div class="admin-field span-2">
-            <label for="f_ical">Link do calendário iCal (sincronização)</label>
+            <label for="f_ical">Link do calendário iCal — Airbnb</label>
             <input type="text" id="f_ical" placeholder="https://www.airbnb.com.br/calendar/ical/....ics">
             <span class="hint">No Airbnb: Anúncio → Disponibilidade → Sincronizar calendários → Exportar calendário.</span>
+          </div>
+          <div class="admin-field span-2">
+            <label for="f_ical_booking">Link do calendário iCal — Booking.com</label>
+            <input type="text" id="f_ical_booking" placeholder="https://admin.booking.com/.../calendar.ics">
+            <span class="hint">No Extranet do Booking: Propriedade → Calendário → Sincronizar calendários → Exportar calendário.</span>
           </div>
         </div>
 
@@ -293,6 +298,7 @@
     document.getElementById('f_video').value = im.video_url || '';
     document.getElementById('f_airbnb').value = im.link_airbnb || '';
     document.getElementById('f_ical').value = im.link_ical || '';
+    document.getElementById('f_ical_booking').value = im.link_ical_booking || '';
     formTitle.textContent = 'Editando: ' + im.nome;
     hideMsg(formMsg);
     window.scrollTo({ top: form.getBoundingClientRect().top + window.scrollY - 40, behavior: 'smooth' });
@@ -353,6 +359,7 @@
       video_url: document.getElementById('f_video').value.trim() || null,
       link_airbnb: document.getElementById('f_airbnb').value.trim() || null,
       link_ical: document.getElementById('f_ical').value.trim() || null,
+      link_ical_booking: document.getElementById('f_ical_booking').value.trim() || null,
       ativo: document.getElementById('f_ativo').checked
     };
 
