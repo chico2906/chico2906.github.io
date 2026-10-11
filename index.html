@@ -10,114 +10,147 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-:root {
-  --blue: #0d4e88;
-  --blue-dark: #083b6c;
-  --sand: #caa27e;
-  --sand-soft: #f4e3cf;
-  --ink: #173552;
-  --muted: #697d9c;
-  --header-h: 72px;
-  --wrap: 1180px;
-  --shadow: 0 12px 32px rgba(14, 54, 86, .10);
-}
+    :root {
+      --blue: #0E3B43;
+      --blue-dark: #082A30;
+      --sand: #EFE6D2;
+      --sand-deep: #E3D5B9;
+      --cream: #FAF7EF;
+      --ink: #17343A;
+      --muted: #66777A;
+      --white: #fff;
+      --header-h: 78px;
+      --wrap: 1180px;
+      --shadow: 0 12px 32px rgba(8, 42, 48, .10);
+    }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
-body { margin: 0; overflow-x: hidden; color: var(--ink); font-family: "Nunito", system-ui, sans-serif; font-size: 16px; line-height: 1.5; background: #fff; }
-a { color: inherit; }
-img { max-width: 100%; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
+    body { margin: 0; overflow-x: hidden; color: var(--ink); font-family: "Nunito", system-ui, sans-serif; font-size: 16px; line-height: 1.5; background: var(--cream); }
+    a { color: inherit; }
+    img { max-width: 100%; }
+    .wrap { width: min(var(--wrap), calc(100% - 48px)); margin-inline: auto; }
 
-/* largura única para todas as seções: tudo fica alinhado */
-.wrap { width: min(var(--wrap), calc(100% - 48px)); margin-inline: auto; }
+    /* Header — opção 2: bege como cor dominante */
+    .header {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 50;
+      height: var(--header-h);
+      background: var(--sand);
+      box-shadow: 0 1px 0 rgba(8, 42, 48, .08);
+    }
+    .header-inner { height: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; width: 190px; height: 56px; }
+    .brand img { width: 100%; height: 100%; object-fit: contain; object-position: left center; }
+    .nav { height: 100%; display: flex; align-items: center; gap: 34px; font-size: .92rem; font-weight: 800; color: var(--blue-dark); }
+    .nav a { position: relative; display: flex; align-items: center; height: 100%; text-decoration: none; white-space: nowrap; }
+    .nav a::after { content: ""; position: absolute; left: 50%; right: 50%; bottom: 16px; height: 2px; background: var(--blue); transition: .25s ease; }
+    .nav a:hover::after, .nav a.active::after { left: 0; right: 0; }
+    .nav .nav-login { display: none; }
+    .login-link {
+      justify-self: end;
+      color: var(--sand);
+      background: var(--blue);
+      font-size: .88rem;
+      font-weight: 900;
+      text-decoration: none;
+      padding: 9px 20px;
+      border: 2px solid var(--blue);
+      border-radius: 999px;
+      transition: background .2s ease, color .2s ease, transform .2s ease;
+    }
+    .login-link:hover { background: var(--blue-dark); transform: translateY(-1px); }
+    .menu-toggle { display: none; border: 0; background: transparent; padding: 10px; }
+    .menu-toggle span { display: block; width: 24px; height: 3px; margin: 5px; border-radius: 2px; background: var(--blue); }
 
-/* ---------- Cabeçalho: branco sólido o tempo todo (sem trocar de fundo ao rolar) ---------- */
-.header { position: fixed; inset: 0 0 auto; z-index: 50; height: var(--header-h); background: #fff; box-shadow: 0 1px 0 rgba(13, 78, 136, .08); transition: box-shadow .25s ease; }
-.header.scrolled { box-shadow: 0 6px 22px rgba(7, 45, 75, .10); }
-.header-inner { height: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; }
-.brand { display: inline-flex; align-items: center; width: 190px; height: 52px; }
-.brand img { width: 100%; height: 100%; object-fit: contain; object-position: left center; }
-.nav { height: 100%; display: flex; align-items: center; gap: 34px; font-size: .92rem; font-weight: 700; }
-.nav a { position: relative; display: flex; align-items: center; height: 100%; text-decoration: none; white-space: nowrap; }
-.nav a::after { content: ""; position: absolute; left: 50%; right: 50%; bottom: 16px; height: 2px; background: var(--sand); transition: .25s ease; }
-.nav a:hover::after, .nav a.active::after { left: 0; right: 0; }
-.nav .nav-login { display: none; }
-.login-link { justify-self: end; color: var(--blue); font-size: .88rem; font-weight: 800; text-decoration: none; padding: 8px 20px; border: 2px solid var(--blue); border-radius: 999px; transition: color .2s ease, background .2s ease; }
-.login-link:hover { color: #fff; background: var(--blue); }
-.menu-toggle { display: none; border: 0; background: transparent; padding: 10px; }
-.menu-toggle span { display: block; width: 24px; height: 3px; margin: 5px; border-radius: 2px; background: var(--blue); }
+    main { padding-top: var(--header-h); }
 
-/* ---------- Foto principal: começa logo abaixo do cabeçalho, nunca fica por baixo dele ---------- */
-main { padding-top: var(--header-h); }
-.hero { position: relative; min-height: 300px; display: flex; align-items: center; background: url('images/home/hero-piscina.jpeg') center 55% / cover no-repeat; }
-.hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255,255,255,.94) 0%, rgba(255,255,255,.80) 35%, rgba(255,255,255,.05) 70%); }
-.hero-content { position: relative; z-index: 1; padding: 44px 0; }
-.hero h1 { margin: 0; max-width: 560px; color: var(--blue); font-size: clamp(1.75rem, 1.2rem + 2vw, 2.6rem); line-height: 1.12; letter-spacing: -.03em; font-weight: 900; }
-.hero h1 span { color: #c6a183; }
-.hero p { margin: 12px 0 0; max-width: 480px; font-size: clamp(.95rem, .9rem + .25vw, 1.08rem); font-weight: 600; }
+    /* Hero */
+    .hero { position: relative; min-height: 420px; display: flex; align-items: center; background: url('images/home/hero-piscina.jpeg') center 55% / cover no-repeat; }
+    .hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(8,42,48,.78) 0%, rgba(8,42,48,.50) 42%, rgba(8,42,48,.08) 78%); }
+    .hero-content { position: relative; z-index: 1; padding: 72px 0; color: var(--white); }
+    .hero h1 { margin: 0; max-width: 620px; font-size: clamp(2rem, 1.35rem + 2.5vw, 3.35rem); line-height: 1.08; letter-spacing: -.035em; font-weight: 900; }
+    .hero h1 span { color: var(--sand); }
+    .hero p { margin: 16px 0 0; max-width: 510px; font-size: clamp(1rem, .92rem + .25vw, 1.12rem); font-weight: 600; color: #f8f4ea; }
+    .hero-actions { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+    .hero-button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 22px; border-radius: 999px; background: var(--sand); color: var(--blue-dark); font-weight: 900; text-decoration: none; transition: transform .2s ease, background .2s ease; }
+    .hero-button:hover { background: #f6eedc; transform: translateY(-2px); }
 
-/* ---------- Serviços ---------- */
-.services { position: relative; overflow: hidden; padding: 40px 0 64px; background: linear-gradient(#fff, #fcfaf7); }
-.services::before, .services::after { content: ""; position: absolute; top: 40px; bottom: 0; width: 120px; opacity: .08; background: radial-gradient(ellipse at center, #4c806c 0 12%, transparent 13%) 0 0/42px 90px; }
-.services::before { left: -55px; transform: rotate(-18deg); }
-.services::after { right: -55px; transform: rotate(18deg); }
-.service-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
-.service-card { position: relative; overflow: hidden; border-radius: 16px; background: #fff; box-shadow: var(--shadow); transition: transform .25s ease, box-shadow .25s ease; }
-.service-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(14, 54, 86, .15); }
-.service-card > img { display: block; width: 100%; height: 200px; object-fit: cover; }
-.service-icon { position: absolute; left: 50%; top: 200px; width: 56px; height: 56px; transform: translate(-50%, -50%); display: grid; place-items: center; color: var(--blue); background: var(--sand-soft); border: 4px solid #fff; border-radius: 50%; }
-.service-icon svg { width: 27px; height: 27px; fill: none; stroke: currentColor; stroke-width: 2.25; stroke-linecap: round; stroke-linejoin: round; }
-.service-icon.house { color: #b48662; }
-.service-body { padding: 40px 24px 26px; text-align: center; }
-.service-body h2 { margin: 0 0 6px; color: var(--blue-dark); font-size: 1.2rem; line-height: 1.25; font-weight: 900; }
-.service-body p { min-height: 44px; margin: 0 auto 18px; max-width: 320px; color: var(--muted); font-size: .95rem; line-height: 1.4; }
-.service-body a { width: min(200px, 100%); margin: auto; display: flex; justify-content: center; align-items: center; gap: 14px; padding: 10px 20px; border-radius: 999px; background: var(--blue); color: #fff; font-size: .92rem; font-weight: 800; text-decoration: none; transition: background .2s ease; }
-.service-body a:hover { background: #073a69; }
-.service-body a span { font-size: 1.4rem; line-height: .7; }
+    /* Serviços */
+    .services { padding: 64px 0 76px; background: var(--cream); }
+    .section-heading { text-align: center; max-width: 720px; margin: 0 auto 34px; }
+    .eyebrow { margin: 0 0 8px; color: var(--blue); font-size: .76rem; font-weight: 900; text-transform: uppercase; letter-spacing: .18em; }
+    .section-heading h2 { margin: 0; color: var(--blue-dark); font-size: clamp(1.65rem, 1.2rem + 1.4vw, 2.25rem); line-height: 1.15; }
+    .section-heading p { margin: 10px auto 0; color: var(--muted); max-width: 620px; }
+    .service-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+    .service-card { position: relative; overflow: hidden; border-radius: 16px; background: var(--white); box-shadow: var(--shadow); transition: transform .25s ease, box-shadow .25s ease; }
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(8, 42, 48, .15); }
+    .service-card > img { display: block; width: 100%; height: 200px; object-fit: cover; }
+    .service-icon { position: absolute; left: 50%; top: 200px; width: 56px; height: 56px; transform: translate(-50%, -50%); display: grid; place-items: center; color: var(--blue); background: var(--sand); border: 4px solid var(--white); border-radius: 50%; }
+    .service-icon.house { color: var(--blue-dark); }
+    .service-icon svg { width: 27px; height: 27px; fill: none; stroke: currentColor; stroke-width: 2.25; stroke-linecap: round; stroke-linejoin: round; }
+    .service-body { padding: 40px 24px 26px; text-align: center; }
+    .service-body h3 { margin: 0 0 6px; color: var(--blue-dark); font-size: 1.2rem; line-height: 1.25; font-weight: 900; }
+    .service-body p { min-height: 44px; margin: 0 auto 18px; max-width: 320px; color: var(--muted); font-size: .95rem; line-height: 1.4; }
+    .service-body a { width: min(200px, 100%); margin: auto; display: flex; justify-content: center; align-items: center; gap: 14px; padding: 10px 20px; border-radius: 999px; background: var(--blue); color: var(--sand); font-size: .92rem; font-weight: 900; text-decoration: none; transition: background .2s ease, transform .2s ease; }
+    .service-body a:hover { background: var(--blue-dark); transform: translateY(-1px); }
+    .service-body a span { font-size: 1.4rem; line-height: .7; }
 
-/* ---------- Quem somos ---------- */
-.about { padding: 72px 0; background: #0d4e88; color: #fff; }
-.about-inner { width: min(760px, calc(100% - 48px)); margin: auto; text-align: center; }
-.eyebrow { margin: 0 0 10px; color: #f3d39d; font-size: .78rem; font-weight: 900; text-transform: uppercase; letter-spacing: .18em; }
-.about h2 { margin: 0 0 16px; font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.1rem); line-height: 1.15; }
-.about p:last-child { margin: 0; font-size: 1rem; line-height: 1.7; color: #e1ecf5; }
+    /* Quem somos */
+    .about { padding: 78px 0; background: var(--blue); color: var(--white); }
+    .about-inner { width: min(800px, calc(100% - 48px)); margin: auto; text-align: center; }
+    .about .eyebrow { color: var(--sand); }
+    .about h2 { margin: 0 0 16px; font-size: clamp(1.6rem, 1.1rem + 1.6vw, 2.3rem); line-height: 1.15; }
+    .about p:last-child { margin: 0; font-size: 1rem; line-height: 1.75; color: #edf1ed; }
 
-/* ---------- Rodapé ---------- */
-footer { background: #f7f2ec; }
-.footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 32px 0; }
-footer img { display: block; width: 170px; height: auto; }
-footer p { margin: 6px 0 0; font-size: .92rem; color: #697d8f; }
-.footer-phone { color: var(--blue); font-size: 1rem; font-weight: 900; text-decoration: none; }
+    /* CTA */
+    .cta { padding: 60px 0; background: var(--sand); }
+    .cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 30px; }
+    .cta h2 { margin: 0 0 7px; color: var(--blue-dark); font-size: clamp(1.4rem, 1.05rem + 1vw, 1.9rem); }
+    .cta p { margin: 0; color: #4e6265; }
+    .cta a { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; padding: 12px 22px; border-radius: 999px; background: var(--blue); color: var(--sand); font-weight: 900; text-decoration: none; }
+    .cta a:hover { background: var(--blue-dark); }
 
-/* ---------- Tablet e celular ---------- */
-@media (max-width: 980px) {
-  :root { --header-h: 64px; }
-  .header-inner { grid-template-columns: 1fr auto; gap: 8px; }
-  .brand { width: 160px; height: 44px; }
-  .login-link { display: none; }
-  .menu-toggle { display: block; grid-column: 2; }
-  .nav { position: fixed; left: 14px; right: 14px; top: calc(var(--header-h) + 6px); height: auto; display: none; flex-direction: column; align-items: stretch; gap: 0; padding: 8px; border-radius: 14px; background: #fff; box-shadow: var(--shadow); font-size: 1rem; }
-  .nav.open { display: flex; }
-  .nav a { height: auto; padding: 13px 16px; }
-  .nav a::after { display: none; }
-  .nav .nav-login { display: flex; margin-top: 6px; border-top: 1px solid rgba(13, 78, 136, .12); color: var(--blue); font-weight: 800; }
-  .hero { min-height: 360px; align-items: flex-end; background-position: 62% center; }
-  .hero-overlay { background: linear-gradient(180deg, rgba(255,255,255,.1), rgba(255,255,255,.94) 70%); }
-  .hero-content { padding: 0 0 32px; }
-  .service-grid { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; }
-  .service-card > img { height: 220px; }
-  .service-icon { top: 220px; }
-}
+    /* Rodapé */
+    footer { background: var(--cream); border-top: 1px solid rgba(14,59,67,.08); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 32px 0; }
+    footer img { display: block; width: 170px; height: auto; }
+    footer p { margin: 6px 0 0; font-size: .92rem; color: var(--muted); }
+    .footer-phone { color: var(--blue); font-size: 1rem; font-weight: 900; text-decoration: none; }
 
-@media (max-width: 580px) {
-  .wrap { width: calc(100% - 32px); }
-  .brand { width: 130px; }
-  .services { padding: 28px 0 48px; }
-  .about { padding: 56px 0; }
-  .about-inner { width: calc(100% - 32px); }
-  .footer-inner { flex-direction: column; text-align: center; }
-}
-</style>
+    @media (max-width: 980px) {
+      :root { --header-h: 70px; }
+      .header-inner { grid-template-columns: 1fr auto; gap: 8px; }
+      .brand { width: 160px; height: 48px; }
+      .login-link { display: none; }
+      .menu-toggle { display: block; grid-column: 2; }
+      .nav { position: fixed; left: 14px; right: 14px; top: calc(var(--header-h) + 6px); height: auto; display: none; flex-direction: column; align-items: stretch; gap: 0; padding: 8px; border-radius: 14px; background: var(--sand); box-shadow: var(--shadow); font-size: 1rem; }
+      .nav.open { display: flex; }
+      .nav a { height: auto; padding: 13px 16px; }
+      .nav a::after { display: none; }
+      .nav .nav-login { display: flex; margin-top: 6px; border-top: 1px solid rgba(14,59,67,.12); color: var(--blue); font-weight: 900; }
+      .hero { min-height: 500px; align-items: flex-end; background-position: 62% center; }
+      .hero-overlay { background: linear-gradient(180deg, rgba(8,42,48,.08), rgba(8,42,48,.84) 70%); }
+      .hero-content { padding: 0 0 42px; }
+      .service-grid { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; }
+      .service-card > img { height: 220px; }
+      .service-icon { top: 220px; }
+      .cta-inner { flex-direction: column; text-align: center; }
+    }
+
+    @media (max-width: 580px) {
+      .wrap { width: calc(100% - 32px); }
+      .brand { width: 135px; }
+      .hero h1 { font-size: 2rem; }
+      .hero-actions { margin-top: 22px; }
+      .hero-button { width: 100%; }
+      .services { padding: 48px 0 56px; }
+      .about { padding: 58px 0; }
+      .about-inner { width: calc(100% - 32px); }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
 </head>
 <body>
   <header class="header" id="inicio">
@@ -142,24 +175,29 @@ footer p { margin: 6px 0 0; font-size: .92rem; color: #697d8f; }
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-overlay"></div>
       <div class="hero-content wrap">
+        <p class="eyebrow" style="color: var(--sand);">WG Houses</p>
         <h1 id="hero-title">Seu imóvel bem cuidado.<br><span>Sua temporada inesquecível.</span></h1>
         <p>Especialistas em locação por temporada e cuidado completo de imóveis.</p>
+        <div class="hero-actions">
+          <a class="hero-button" href="#imoveis">Conheça nossos imóveis <span>→</span></a>
+        </div>
       </div>
     </section>
 
-    <section class="services" aria-label="Serviços WG Houses">
+    <section class="services" id="imoveis" aria-label="Serviços WG Houses">
+      <div class="section-heading">
+        <p class="eyebrow">Como podemos ajudar</p>
+        <h2>Uma experiência completa para hóspedes e proprietários</h2>
+        <p>Da escolha do imóvel ao cuidado diário, a WG Houses cuida de cada detalhe.</p>
+      </div>
       <div class="service-grid wrap">
         <article class="service-card">
           <img src="images/home/imovel-temporada.jpg" alt="Casa com piscina disponível para temporada">
           <div class="service-icon" aria-hidden="true">
-            <svg viewBox="0 0 32 32" role="img">
-              <path d="M9 10V7.5A2.5 2.5 0 0 1 11.5 5h9A2.5 2.5 0 0 1 23 7.5V10" />
-              <rect x="5" y="10" width="22" height="16" rx="3" />
-              <path d="M5 16h22M11 14v4M21 14v4M10 26v2M22 26v2" />
-            </svg>
+            <svg viewBox="0 0 32 32"><path d="M9 10V7.5A2.5 2.5 0 0 1 11.5 5h9A2.5 2.5 0 0 1 23 7.5V10"/><rect x="5" y="10" width="22" height="16" rx="3"/><path d="M5 16h22M11 14v4M21 14v4M10 26v2M22 26v2"/></svg>
           </div>
           <div class="service-body">
-            <h2>Imóveis para temporada</h2>
+            <h3>Imóveis para temporada</h3>
             <p>Encontre o lugar ideal para seus melhores dias.</p>
             <a href="https://wa.me/5547984821658?text=Ol%C3%A1%2C%20quero%20conhecer%20os%20im%C3%B3veis%20dispon%C3%ADveis%20para%20temporada." target="_blank" rel="noopener">Saiba mais <span>›</span></a>
           </div>
@@ -168,13 +206,10 @@ footer p { margin: 6px 0 0; font-size: .92rem; color: #697d8f; }
         <article class="service-card">
           <img src="images/home/anuncie-imovel.jpg" alt="Entrega das chaves de um imóvel">
           <div class="service-icon house" aria-hidden="true">
-            <svg viewBox="0 0 32 32" role="img">
-              <path d="M4.5 15.5 16 6l11.5 9.5" />
-              <path d="M7.5 14v12h17V14M13 26v-7h6v7" />
-            </svg>
+            <svg viewBox="0 0 32 32"><path d="M4.5 15.5 16 6l11.5 9.5"/><path d="M7.5 14v12h17V14M13 26v-7h6v7"/></svg>
           </div>
           <div class="service-body">
-            <h2>Anuncie seu imóvel</h2>
+            <h3>Anuncie seu imóvel</h3>
             <p>Transforme seu imóvel em renda com gestão profissional.</p>
             <a href="https://wa.me/5547984821658?text=Ol%C3%A1%2C%20quero%20anunciar%20meu%20im%C3%B3vel%20com%20a%20WG%20Houses." target="_blank" rel="noopener">Saiba mais <span>›</span></a>
           </div>
@@ -183,70 +218,59 @@ footer p { margin: 6px 0 0; font-size: .92rem; color: #697d8f; }
         <article class="service-card">
           <img src="images/home/cuidado-imovel.png" alt="Profissional realizando a vistoria de um imóvel">
           <div class="service-icon" aria-hidden="true">
-            <svg viewBox="0 0 32 32" role="img">
-              <path d="M20.8 6.2a7 7 0 0 0-8.9 8.9L5.2 21.8a3.5 3.5 0 0 0 5 5l6.7-6.7a7 7 0 0 0 8.9-8.9l-4.6 4.6-4.9-1.3-1.3-4.9 4.6-4.6Z" />
-            </svg>
+            <svg viewBox="0 0 32 32"><path d="M20.8 6.2a7 7 0 0 0-8.5 10.9L7 22.4a2.4 2.4 0 0 0 3.4 3.4l5.8-5.3a7 7 0 0 0 4.6-14.3Z"/><path d="m18 10 4 4M8 24l-2 2"/></svg>
           </div>
           <div class="service-body">
-            <h2>Cuidado do seu imóvel</h2>
-            <p>Manutenção, vistorias e tranquilidade, mesmo sem alugar.</p>
-            <a href="https://wa.me/5547984821658?text=Ol%C3%A1%2C%20quero%20saber%20mais%20sobre%20o%20servi%C3%A7o%20de%20cuidado%20do%20im%C3%B3vel." target="_blank" rel="noopener">Saiba mais <span>›</span></a>
+            <h3>Cuidado do seu imóvel</h3>
+            <p>Manutenção, organização e acompanhamento para seu patrimônio.</p>
+            <a href="https://wa.me/5547984821658?text=Ol%C3%A1%2C%20quero%20saber%20mais%20sobre%20a%20gest%C3%A3o%20do%20meu%20im%C3%B3vel." target="_blank" rel="noopener">Saiba mais <span>›</span></a>
           </div>
         </article>
       </div>
     </section>
 
-    <section class="about" id="quem-somos">
+    <section class="about" id="quem-somos" aria-labelledby="about-title">
       <div class="about-inner">
-        <p class="eyebrow">WG Houses</p>
-        <h2>Seu imóvel cuidado como se fosse nosso.</h2>
-        <p>Trabalhamos com locações por temporada e também cuidamos de casas que seus proprietários preferem não alugar. Acompanhamos cada detalhe para oferecer segurança, tranquilidade e uma experiência acolhedora.</p>
+        <p class="eyebrow">Quem somos</p>
+        <h2 id="about-title">Cuidamos do seu imóvel como se fosse nosso.</h2>
+        <p>A WG Houses trabalha com locação por temporada e gestão de imóveis, oferecendo atendimento próximo, organização e cuidado em cada etapa. Nosso objetivo é tornar a experiência mais tranquila para quem hospeda e para quem investe.</p>
+      </div>
+    </section>
+
+    <section class="cta" id="contato" aria-labelledby="cta-title">
+      <div class="cta-inner wrap">
+        <div>
+          <h2 id="cta-title">Quer falar com a WG Houses?</h2>
+          <p>Entre em contato e descubra como podemos ajudar.</p>
+        </div>
+        <a href="https://wa.me/5547984821658?text=Ol%C3%A1%2C%20quero%20falar%20com%20a%20WG%20Houses." target="_blank" rel="noopener">Fale conosco →</a>
       </div>
     </section>
   </main>
 
-  <footer id="contato">
+  <footer>
     <div class="footer-inner wrap">
       <div>
         <img src="images/logo/logo-wg-houses.png" alt="WG Houses">
-        <p>Temporada e cuidado completo de imóveis.</p>
+        <p>Temporada e cuidado de imóveis.</p>
       </div>
-      <a class="footer-phone" href="tel:+5547984821658">(47) 98482-1658</a>
+      <a class="footer-phone" href="https://wa.me/5547984821658" target="_blank" rel="noopener">WhatsApp: (47) 98482-1658</a>
     </div>
   </footer>
 
   <script>
-const toggle = document.querySelector('.menu-toggle');
-const nav = document.querySelector('.nav');
-const header = document.querySelector('.header');
-const links = [...document.querySelectorAll('.nav a[href^="#"]')];
-const targets = links.map(link => document.querySelector(link.hash));
-
-toggle?.addEventListener('click', () => {
-  const open = nav.classList.toggle('open');
-  toggle.setAttribute('aria-expanded', String(open));
-});
-
-document.querySelectorAll('.nav a').forEach(link => {
-  link.addEventListener('click', () => {
-    nav.classList.remove('open');
-    toggle?.setAttribute('aria-expanded', 'false');
-  });
-});
-
-// Sombra do cabeçalho + destaque do item de menu da seção em que você está
-function onScroll() {
-  header.classList.toggle('scrolled', scrollY > 8);
-  const linha = scrollY + header.offsetHeight + 40;
-  let atual = 0;
-  targets.forEach((alvo, i) => {
-    if (alvo && alvo.getBoundingClientRect().top + scrollY <= linha) atual = i;
-  });
-  if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) atual = links.length - 1;
-  links.forEach((link, i) => link.classList.toggle('active', i === atual));
-}
-addEventListener('scroll', onScroll, { passive: true });
-onScroll();
-</script>
+    const menuButton = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.nav');
+    if (menuButton && nav) {
+      menuButton.addEventListener('click', () => {
+        const open = nav.classList.toggle('open');
+        menuButton.setAttribute('aria-expanded', String(open));
+      });
+      nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+        nav.classList.remove('open');
+        menuButton.setAttribute('aria-expanded', 'false');
+      }));
+    }
+  </script>
 </body>
 </html>
