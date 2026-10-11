@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contato | WG Houses</title>
+  <meta name="description" content="Fale com a WG Houses: imóveis para temporada, gestão de locação e cuidado completo do seu imóvel.">
+  <link rel="icon" href="images/logo/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --blue: #0d4e88;
+  --blue-dark: #083b6c;
+  --sand: #caa27e;
+  --ink: #173552;
+  --muted: #697d9c;
+  --line: #8aa6c1;
+  --danger: #b3402a;
+  --header-h: 72px;
+  --wrap: 1180px;
+  --shadow: 0 12px 32px rgba(14, 54, 86, .10);
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--header-h); }
+body { margin: 0; overflow-x: hidden; color: var(--ink); font-family: "Nunito", system-ui, sans-serif; font-size: 16px; line-height: 1.5; background: #fff; }
+a { color: inherit; }
+img { max-width: 100%; }
+.wrap { width: min(var(--wrap), calc(100% - 48px)); margin-inline: auto; }
+
+/* ---------- Cabeçalho (igual ao da página inicial) ---------- */
+.header { position: fixed; inset: 0 0 auto; z-index: 50; height: var(--header-h); background: #fff; box-shadow: 0 1px 0 rgba(13, 78, 136, .08); transition: box-shadow .25s ease; }
+.header.scrolled { box-shadow: 0 6px 22px rgba(7, 45, 75, .10); }
+.header-inner { height: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; }
+.brand { display: inline-flex; align-items: center; width: 190px; height: 52px; }
+.brand img { width: 100%; height: 100%; object-fit: contain; object-position: left center; }
+.nav { height: 100%; display: flex; align-items: center; gap: 34px; font-size: .92rem; font-weight: 700; }
+.nav a { position: relative; display: flex; align-items: center; height: 100%; text-decoration: none; white-space: nowrap; }
+.nav a::after { content: ""; position: absolute; left: 50%; right: 50%; bottom: 16px; height: 2px; background: var(--sand); transition: .25s ease; }
+.nav a:hover::after, .nav a.active::after { left: 0; right: 0; }
+.nav .nav-login { display: none; }
+.login-link { justify-self: end; color: var(--blue); font-size: .88rem; font-weight: 800; text-decoration: none; padding: 8px 20px; border: 2px solid var(--blue); border-radius: 999px; transition: color .2s ease, background .2s ease; }
+.login-link:hover { color: #fff; background: var(--blue); }
+.menu-toggle { display: none; border: 0; background: transparent; padding: 10px; }
+.menu-toggle span { display: block; width: 24px; height: 3px; margin: 5px; border-radius: 2px; background: var(--blue); }
+
+/* ---------- Página de contato ---------- */
+main { padding-top: var(--header-h); }
+.contact { padding: 36px 0 72px; }
+.contact-title { margin: 0; color: var(--blue); font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2rem); line-height: 1.15; font-weight: 900; letter-spacing: -.02em; }
+.contact-form { margin-top: 22px; padding-top: 26px; border-top: 1px solid #e6e3df; display: grid; grid-template-columns: minmax(210px, 31%) 1fr; gap: 28px 36px; align-items: start; }
+
+.field { margin-bottom: 18px; }
+.label-row { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+.field label, .label-row label { display: block; font-size: .82rem; font-weight: 800; color: var(--ink); }
+.main .field label { color: var(--blue-dark); }
+.label-row label { margin: 0; }
+.side .field label { margin-bottom: 6px; }
+.hint { font-size: .75rem; font-weight: 700; color: var(--danger); text-align: right; }
+
+.field input[type="text"], .field input[type="email"], .field input[type="tel"], .field select, .field textarea {
+  width: 100%; padding: 9px 11px; font: inherit; font-size: .92rem; color: var(--ink);
+  background: #fff; border: 1px solid var(--line); border-radius: 4px;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.field textarea { min-height: 170px; resize: vertical; line-height: 1.45; }
+.field select {
+  appearance: none; -webkit-appearance: none; padding-right: 32px; cursor: pointer;
+  background: #fff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%23173552' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat right 12px center / 10px 6px;
+}
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(13, 78, 136, .18); }
+.field [aria-invalid="true"] { border-color: var(--danger); }
+
+/* telefone com bandeira + DDI */
+.phone { display: flex; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 4px; transition: border-color .15s ease, box-shadow .15s ease; }
+.phone:focus-within { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(13, 78, 136, .18); }
+.phone.invalid { border-color: var(--danger); }
+.phone-flag { display: flex; align-items: center; gap: 6px; padding: 0 4px 0 10px; }
+.phone-flag svg { display: block; width: 22px; height: 15px; border-radius: 2px; }
+.phone-ddi { padding: 0 6px 0 4px; font-size: .92rem; font-weight: 700; color: var(--ink); }
+.field .phone input[type="tel"] { border: 0; border-radius: 0; box-shadow: none; flex: 1; min-width: 0; padding: 9px 11px 9px 2px; }
+.field .phone input[type="tel"]:focus { border: 0; box-shadow: none; }
+
+.side-note { margin: 4px 0 0; text-align: center; font-size: .92rem; }
+.actions { display: flex; justify-content: flex-end; margin-top: 4px; }
+.btn-send { border: 0; cursor: pointer; padding: 11px 22px; border-radius: 4px; background: var(--blue); color: #fff; font: inherit; font-size: .95rem; font-weight: 800; transition: background .2s ease; }
+.btn-send:hover { background: #073a69; }
+.btn-send:disabled { opacity: .65; cursor: default; }
+.form-status { margin-top: 14px; padding: 12px 14px; border-radius: 6px; font-size: .9rem; }
+.form-status.err { background: #fbeeea; color: var(--danger); }
+.form-status a { font-weight: 800; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.sent { margin-top: 22px; padding: 36px 28px; text-align: center; border: 1px solid #dbe6f1; border-radius: 12px; background: #f6f9fc; }
+.sent h2 { margin: 0 0 8px; color: var(--blue); font-size: 1.35rem; font-weight: 900; }
+.sent p { margin: 0 0 18px; color: var(--ink); }
+.sent a { display: inline-block; padding: 10px 22px; border-radius: 999px; background: var(--blue); color: #fff; font-size: .92rem; font-weight: 800; text-decoration: none; }
+
+/* ---------- Rodapé ---------- */
+footer { background: #f7f2ec; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 32px 0; }
+footer img { display: block; width: 170px; height: auto; }
+footer p { margin: 6px 0 0; font-size: .92rem; color: #697d8f; }
+.footer-phone { color: var(--blue); font-size: 1rem; font-weight: 900; text-decoration: none; }
+
+/* ---------- Tablet e celular ---------- */
+@media (max-width: 980px) {
+  :root { --header-h: 64px; }
+  .header-inner { grid-template-columns: 1fr auto; gap: 8px; }
+  .brand { width: 160px; height: 44px; }
+  .login-link { display: none; }
+  .menu-toggle { display: block; grid-column: 2; }
+  .nav { position: fixed; left: 14px; right: 14px; top: calc(var(--header-h) + 6px); height: auto; display: none; flex-direction: column; align-items: stretch; gap: 0; padding: 8px; border-radius: 14px; background: #fff; box-shadow: var(--shadow); font-size: 1rem; }
+  .nav.open { display: flex; }
+  .nav a { height: auto; padding: 13px 16px; }
+  .nav a::after { display: none; }
+  .nav .nav-login { display: flex; margin-top: 6px; border-top: 1px solid rgba(13, 78, 136, .12); color: var(--blue); font-weight: 800; }
+}
+@media (max-width: 760px) {
+  .contact-form { grid-template-columns: 1fr; gap: 0; }
+  .side-note { margin-bottom: 22px; }
+}
+@media (max-width: 580px) {
+  .wrap { width: calc(100% - 32px); }
+  .brand { width: 130px; }
+  .footer-inner { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+  <header class="header" id="inicio">
+    <div class="header-inner wrap">
+      <a class="brand" href="index.html" aria-label="WG Houses — página inicial">
+        <img src="images/logo/logo-wg-houses.png" alt="WG Houses">
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-principal" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav" id="menu-principal" aria-label="Navegação principal">
+        <a href="index.html">Início</a>
+        <a href="index.html#quem-somos">Quem Somos</a>
+        <a class="active" href="contato.html" aria-current="page">Contato</a>
+        <a class="nav-login" href="login.html">Login</a>
+      </nav>
+      <a class="login-link" href="login.html">Login</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="contact wrap" aria-labelledby="contato-titulo">
+      <h1 class="contact-title" id="contato-titulo">Contato</h1>
+
+      <form class="contact-form" id="contactForm" novalidate>
+        <!-- coluna da esquerda -->
+        <div class="side">
+          <div class="field">
+            <label for="origem">Como você nos encontrou?</label>
+            <select id="origem" name="origem">
+              <option value="">Selecione</option>
+              <option value="Google">Google</option>
+              <option value="Facebook">Facebook</option>
+              <option value="Instagram">Instagram</option>
+              <option value="TikTok">TikTok</option>
+              <option value="Já sou cliente">Já sou cliente</option>
+              <option value="Indicação">Indicação. De quem?</option>
+              <option value="Outro site, blog ou fórum">Outro site, blog ou fórum. Qual?</option>
+            </select>
+          </div>
+
+          <!-- aparece só para "Indicação" e "Outro site, blog ou fórum" -->
+          <div class="field" id="origemExtraWrap" hidden>
+            <div class="label-row">
+              <label for="origemExtra" id="origemExtraLabel">Quem indicou você?</label>
+              <span class="hint" id="h-origemExtra" hidden>Preencha este campo.</span>
+            </div>
+            <input type="text" id="origemExtra" name="origemExtra" maxlength="120" autocomplete="off">
+          </div>
+
+          <div class="field">
+            <label for="contatoPref">Como você gostaria de ser contatado?</label>
+            <select id="contatoPref" name="contatoPref">
+              <option value="Email">Email</option>
+              <option value="Telefone">Telefone</option>
+              <option value="WhatsApp">WhatsApp</option>
+            </select>
+          </div>
+
+          <p class="side-note">Entre em contato conosco!</p>
+        </div>
+
+        <!-- coluna da direita -->
+        <div class="main">
+          <div class="field">
+            <div class="label-row">
+              <label for="nome">Nome:</label>
+              <span class="hint" id="h-nome" hidden>Preencha este campo.</span>
+            </div>
+            <input type="text" id="nome" name="nome" autocomplete="name" maxlength="120">
+          </div>
+
+          <div class="field">
+            <div class="label-row">
+              <label for="email">E-mail:</label>
+              <span class="hint" id="h-email" hidden>Preencha este campo.</span>
+            </div>
+            <input type="email" id="email" name="email" autocomplete="email" maxlength="160">
+          </div>
+
+          <div class="field">
+            <div class="label-row">
+              <label for="telefone">Telefone:</label>
+              <span class="hint" id="h-telefone" hidden>Preencha este campo.</span>
+            </div>
+            <div class="phone" id="phoneBox">
+              <span class="phone-flag" aria-hidden="true">
+                <svg viewBox="0 0 22 15"><rect width="22" height="15" fill="#009c3b"/><path d="M11 1.6 20 7.5 11 13.4 2 7.5Z" fill="#ffdf00"/><circle cx="11" cy="7.5" r="3.3" fill="#002776"/></svg>
+              </span>
+              <span class="phone-ddi">+55</span>
+              <input type="tel" id="telefone" name="telefone" inputmode="tel" autocomplete="tel-national" placeholder="11 96123-4567" maxlength="14">
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="label-row">
+              <label for="assunto">Assunto:</label>
+              <span class="hint" id="h-assunto" hidden>Preencha este campo.</span>
+            </div>
+            <input type="text" id="assunto" name="assunto" maxlength="140">
+          </div>
+
+          <div class="field">
+            <div class="label-row">
+              <label for="mensagem">Mensagem:</label>
+              <span class="hint" id="h-mensagem" hidden>Preencha este campo.</span>
+            </div>
+            <textarea id="mensagem" name="mensagem" maxlength="3000"></textarea>
+          </div>
+
+          <!-- campo-armadilha contra robôs: pessoas nunca veem nem preenchem -->
+          <div class="hp" aria-hidden="true">
+            <label for="empresa">Não preencha este campo</label>
+            <input type="text" id="empresa" name="empresa" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn-send" id="btnSend">Enviar mensagem</button>
+          </div>
+          <div class="form-status err" id="formStatus" role="alert" hidden></div>
+        </div>
+      </form>
+
+      <div class="sent" id="sentBox" role="status" hidden>
+        <h2>Mensagem enviada!</h2>
+        <p id="sentText">Recebemos o seu contato e responderemos em breve.</p>
+        <a href="index.html">Voltar para o início</a>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contato">
+    <div class="footer-inner wrap">
+      <div>
+        <img src="images/logo/logo-wg-houses.png" alt="WG Houses">
+        <p>Temporada e cuidado completo de imóveis.</p>
+      </div>
+      <a class="footer-phone" href="tel:+5547984821658">(47) 98482-1658</a>
+    </div>
+  </footer>
+
+  <script>
+// ---------- menu do celular + sombra do cabeçalho ----------
+const toggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('.nav');
+const header = document.querySelector('.header');
+toggle?.addEventListener('click', () => {
+  const open = nav.classList.toggle('open');
+  toggle.setAttribute('aria-expanded', String(open));
+});
+addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 8), { passive: true });
+
+// ---------- formulário ----------
+// Envio por e-mail: o serviço FormSubmit recebe os dados e encaminha para este endereço.
+const EMAIL_DESTINO = 'chicohs@gmail.com';
+const ENDPOINT = 'https://formsubmit.co/ajax/' + EMAIL_DESTINO;
+const WHATSAPP = 'https://wa.me/5547984821658';
+
+// <pure>
+function formatarTelefone(valor) {
+  const d = valor.replace(/\D/g, '').slice(0, 11);
+  const ddd = d.slice(0, 2);
+  const resto = d.slice(2);
+  if (!resto) return ddd;
+  // celular (começa com 9): 5-4 | fixo: 4-4. O hífen só aparece depois do bloco completo.
+  const corte = resto[0] === '9' ? 5 : 4;
+  return ddd + ' ' + (resto.length > corte ? resto.slice(0, corte) + '-' + resto.slice(corte) : resto);
+}
+function telefoneValido(valor) {
+  const d = valor.replace(/\D/g, '');
+  return (d.length === 10 || d.length === 11) && d[0] !== '0';
+}
+function emailValido(valor) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(valor.trim());
+}
+// </pure>
+
+const $ = id => document.getElementById(id);
+const form = $('contactForm');
+const origem = $('origem');
+const origemExtraWrap = $('origemExtraWrap');
+const origemExtra = $('origemExtra');
+const origemExtraLabel = $('origemExtraLabel');
+const telefone = $('telefone');
+const btnSend = $('btnSend');
+const formStatus = $('formStatus');
+
+// "Indicação" e "Outro site..." abrem um campo extra logo abaixo
+const EXTRAS = {
+  'Indicação': { rotulo: 'Quem indicou você?', dica: 'Nome de quem indicou', chave: 'Quem indicou' },
+  'Outro site, blog ou fórum': { rotulo: 'Qual site, blog ou fórum?', dica: 'Nome ou endereço do site', chave: 'Site, blog ou fórum' }
+};
+origem.addEventListener('change', () => {
+  const extra = EXTRAS[origem.value];
+  origemExtraWrap.hidden = !extra;
+  if (extra) {
+    origemExtraLabel.textContent = extra.rotulo;
+    origemExtra.placeholder = extra.dica;
+    origemExtra.focus();
+  } else {
+    origemExtra.value = '';
+    marcar('origemExtra', true);
+  }
+});
+
+telefone.addEventListener('input', () => { telefone.value = formatarTelefone(telefone.value); });
+
+// "Preencha este campo." aparece ao lado do rótulo, como no modelo
+function marcar(id, ok, mensagem) {
+  const campo = $(id);
+  const dica = $('h-' + id);
+  const alvo = id === 'telefone' ? $('phoneBox') : campo;
+  if (id === 'telefone') alvo.classList.toggle('invalid', !ok); else campo.setAttribute('aria-invalid', String(!ok));
+  if (dica) { dica.hidden = ok; if (!ok && mensagem) dica.textContent = mensagem; }
+}
+const REGRAS = [
+  { id: 'nome', ok: v => v.trim().length >= 2 },
+  { id: 'email', ok: emailValido, vazio: 'Preencha este campo.', invalido: 'Informe um e-mail válido.' },
+  { id: 'telefone', ok: telefoneValido, vazio: 'Preencha este campo.', invalido: 'Informe DDD e número.' },
+  { id: 'assunto', ok: v => v.trim().length >= 2 },
+  { id: 'mensagem', ok: v => v.trim().length >= 5 },
+  { id: 'origemExtra', ok: v => v.trim().length >= 2, so_se_visivel: true }
+];
+function validar() {
+  let primeiroErro = null;
+  REGRAS.forEach(r => {
+    if (r.so_se_visivel && origemExtraWrap.hidden) return;
+    const valor = $(r.id).value;
+    const ok = r.ok(valor);
+    marcar(r.id, ok, valor.trim() ? (r.invalido || 'Preencha este campo.') : (r.vazio || 'Preencha este campo.'));
+    if (!ok && !primeiroErro) primeiroErro = $(r.id);
+  });
+  primeiroErro?.focus();
+  return !primeiroErro;
+}
+// some o aviso assim que a pessoa corrige o campo
+REGRAS.forEach(r => $(r.id).addEventListener('input', () => { if (r.ok($(r.id).value)) marcar(r.id, true); }));
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  if ($('empresa').value) return;           // robô: ignora em silêncio
+  formStatus.hidden = true;
+  if (!validar()) return;
+
+  const extra = EXTRAS[origem.value];
+  const assunto = $('assunto').value.trim();
+  const dados = {
+    _subject: 'Contato pelo site WG Houses — ' + assunto,
+    _template: 'table',
+    _captcha: 'false',
+    'Nome': $('nome').value.trim(),
+    'email': $('email').value.trim(),
+    'Telefone': '+55 ' + telefone.value,
+    'Assunto': assunto,
+    'Mensagem': $('mensagem').value.trim(),
+    'Como nos encontrou': origem.value || 'Não informado',
+    'Como prefere ser contatado': $('contatoPref').value
+  };
+  if (extra) dados[extra.chave] = origemExtra.value.trim();
+
+  btnSend.disabled = true;
+  btnSend.textContent = 'Enviando…';
+  try {
+    const resp = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(dados)
+    });
+    const json = await resp.json().catch(() => ({}));
+    if (!resp.ok || !(json.success === true || json.success === 'true')) throw new Error(json.message || 'falha no envio');
+
+    $('sentText').textContent = 'Recebemos o seu contato e responderemos por ' + $('contatoPref').value + ' em breve.';
+    form.hidden = true;
+    $('sentBox').hidden = false;
+    $('sentBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } catch (erro) {
+    formStatus.innerHTML = 'Não foi possível enviar a mensagem agora. Tente novamente em instantes ou fale com a gente pelo <a href="' + WHATSAPP + '" target="_blank" rel="noopener">WhatsApp</a>.';
+    formStatus.hidden = false;
+  } finally {
+    btnSend.disabled = false;
+    btnSend.textContent = 'Enviar mensagem';
+  }
+});
+</script>
+</body>
+</html>
